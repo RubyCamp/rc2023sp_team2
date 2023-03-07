@@ -40,7 +40,7 @@ class Player < Sprite
 
   def initialize(x, y, map, target=Window)
     @mx, @my, @map, self.target = x, y, map, target
-    super(8.5 * 32, 6 * 32)
+    super(8.5 * 32, 11 * 32)
 
     # “ª‚Íã‚É‚Í‚Ýo‚µ‚Ä•`‰æ‚³‚ê‚é‚Ì‚Å‚»‚Ì‚Ô‚ñˆÊ’u•â³‚·‚é×H
     self.center_x = 0
@@ -89,8 +89,8 @@ map_sub = Map.new("map_sub.dat", mapimage, rt)
 player = Player.new(0, 0, map_base, rt)
 
 # ‰æ–Ê“à‚ÌŽ©ƒLƒƒƒ‰ˆÚ“®”ÍˆÍ
-min_x = 0
-max_x = 608 - 64 - 32
+min_x = 10
+max_x = 70
 
 Window.loop do
   # lˆÚ“®ˆ—

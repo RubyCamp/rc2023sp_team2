@@ -7,8 +7,8 @@ mapimage = []
 mapimage.push(Image.load("./images/map_chip_breakable_block.png")) 
 mapimage.push(Image.new(32, 32,[100,100,255]))   # 地面背景
 mapimage.push(Image.load("./images/map_chip_stable_block.png"))
-mapimage.push(Image.load("./images/map_chip_breakable_wall.png")) #すり抜ける
-mapimage.push(Image.load("./images/map_chip_stable_block.png"))
+mapimage.push(Image.load("./images/map_chip_breakable_wall.png")) 
+mapimage.push(Image.load("./images/map_chip_stable_wall.png"))
 
 # Fiberを使いやすくするモジュール
 module FiberSprite
@@ -36,11 +36,11 @@ class Player < Sprite
 
   def initialize(x, y, map, target=Window)
     @mx, @my, @map, self.target = x, y, map, target
-    super(8.5 * 32, 11 * 32)
+    super(8.5 * 32, 10 * 32)
 
-    # 頭は上にはみ出して描画されるのでそのぶん位置補正する細工
-    self.center_x = 0
-    self.center_y = 16
+    # 肩幅と足元のブロックにぶつかるため位置補正する細工
+    self.center_x = 16
+    self.center_y = 65
     self.offset_sync = true
 
     # 人間画像
@@ -75,7 +75,7 @@ rt = RenderTarget.new(640-64, 480-64)
 
 # マップの作成
 map_base = Map.new("map.dat", mapimage, rt)
-map_sub = Map.new("map_sub.dat", mapimage, rt)
+# map_sub = Map.new("map_sub.dat", mapimage, rt)
 
 # 自キャラ
 player = Player.new(480, 480, map_base, rt)
@@ -95,7 +95,7 @@ Window.loop do
   player.draw
 
   # rtに上層マップを描画
-  map_sub.draw(player.mx - player.x, player.my - player.y)
+ # map_sub.draw(player.mx - player.x, player.my - player.y)
 
   # rtを画面に描画
   Window.draw(32, 32, rt)

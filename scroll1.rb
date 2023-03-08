@@ -4,15 +4,11 @@ require './map'
 
 # 絵のデータを作る
 mapimage = []
-mapimage.push(Image.new(32, 32, [100, 100, 200])) # 海
-mapimage.push(Image.new(32, 32, [50, 200, 50]))   # 平地
-mapimage.push(Image.new(32, 32, [50, 200, 50]).   # 木の根元
-                        box_fill(13, 0, 18, 28, [200, 50, 50]))
-mapimage.push(Image.new(32, 32, [50, 200, 50]).   # 山
-                        triangle_fill(15, 0, 0, 31, 31, 31, [200, 100,100]))
-mapimage.push(Image.new(32, 32).  # 木のあたま。背景は透明色にしておく。
-                        box_fill(13, 16, 18, 31, [200, 50, 50]).
-                        circle_fill(16, 10, 8, [0, 255, 0]))
+mapimage.push(Image.load("./images/map_chip_breakable_block.png")) 
+mapimage.push(Image.new(32, 32,[100,100,255]))   # 地面背景
+mapimage.push(Image.load("./images/map_chip_stable_block.png"))
+mapimage.push(Image.load("./images/map_chip_breakable_wall.png")) #すり抜ける
+mapimage.push(Image.load("./images/map_chip_stable_block.png"))
 
 # Fiberを使いやすくするモジュール
 module FiberSprite
@@ -47,13 +43,9 @@ class Player < Sprite
     self.center_y = 16
     self.offset_sync = true
 
-    # 棒人間画像
-    self.image = Image.new(32, 48).
-                       circle(15, 5, 5, [255, 255, 255]).
-                       line(5, 18, 26, 18, [255, 255, 255]).
-                       line(15, 10, 15, 31, [255, 255, 255]).
-                       line(15, 31, 5, 47, [255, 255, 255]).
-                       line(15, 31, 25, 47, [255, 255, 255])
+    # 人間画像
+    self.image = Image.load("./images/toy_hopping_boy2.png")
+
   end
 
   # Player#updateすると呼ばれるFiberの中身
@@ -69,7 +61,7 @@ class Player < Sprite
           @mx += ix * 4
           @my += iy * 4
           self.x +=ix * 4
-          wait # waitすると次のフレームへ
+          wait # waitすると次のフレームへ        
         end
       else
         wait
@@ -86,11 +78,11 @@ map_base = Map.new("map.dat", mapimage, rt)
 map_sub = Map.new("map_sub.dat", mapimage, rt)
 
 # 自キャラ
-player = Player.new(0, 0, map_base, rt)
+player = Player.new(480, 480, map_base, rt)
 
 # 画面内の自キャラ移動範囲
-min_x = 10
-max_x = 70
+min_x = 0
+max_x = 640
 
 Window.loop do
   # 人移動処理

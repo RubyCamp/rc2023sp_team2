@@ -7,6 +7,7 @@ class Bomb < Sprite
       @hp = 1
       self.collision = [0, 0, 40, 40]
       @image = Image.load("images/bomb.png")
+      @sound3 = Sound.new("Thunder.wav")
   end
   # 更新
   def update
@@ -17,6 +18,7 @@ class Bomb < Sprite
   def hit(obj)
     obj.hp += 1
     self.vanish
+    @sound3.play
   end
 
   def shot(obj)

@@ -24,9 +24,9 @@ class Player < Sprite
       # 人間画像
       @image = Image.load("./images/toy_hopping_boy2.png")
       @image1 = @image.flush([255, 200, 50, 30])
-      self.collision = [0, 97, 64, 97] # 要調整
+      self.collision = [25, 55, 65, 97] # 要調整
 
-      # @ending_director = Ending.new
+      @sound2 = Sound.new("./music_jump.wav")
     end
   
     # Player#updateすると呼ばれるFiberの中身
@@ -46,7 +46,8 @@ class Player < Sprite
           wait
         end
         
-        if Input.key_push?(K_UP) && !@jumping 
+        if Input.key_push?(K_UP) && !@jumping
+          @sound2.play
           @jumping = true 
           @jump_count = 0
         end
@@ -64,13 +65,11 @@ class Player < Sprite
     end
 
     def shot
-      puts("hit")
-      p @hp
       self.image = @image1
       self.target.draw(self.x, self.y, self.image)
       if @hp >= 2
           self.vanish #三回当たったら消える 
-          sleep(0.65) 
+          sleep(0.5) 
           #シーン切り替えたい
           $scene = GameOver
           $scene.exec()

@@ -2,6 +2,9 @@
 require 'dxruby'
 require './map'
 
+
+CHIP_SIZE = 32
+
 # 絵のデータを作る
 mapimage = []
 mapimage.push(Image.load("./images/map_chip_breakable_block.png")) 
@@ -29,6 +32,7 @@ module FiberSprite
   end
 end
 
+
 # 自キャラ
 class Player < Sprite
   include FiberSprite
@@ -40,7 +44,7 @@ class Player < Sprite
 
     # 肩幅と足元のブロックにぶつかるため位置補正する細工
     self.center_x = 16
-    self.center_y = 65
+    self.center_y = 60
     self.offset_sync = true
 
     # 人間画像
@@ -48,20 +52,35 @@ class Player < Sprite
 
   end
 
+#重力
+G = 1
+
   # Player#updateすると呼ばれるFiberの中身
   def fiber_proc
     loop do
-      ix, iy = Input.x, Input.y
+      ix  = Input.x
 
-      # 押されたチェック
-      if ix + iy != 0 and (ix == 0 or iy == 0) and # ナナメは却下
-         @map[@mx/32+ix, @my/32+iy] == 1   # 移動先が平地のときのみ
+      iy =0
+      iy += G
+
+     iy -= G if @map[@mx/32, @my/32+1] == 0
+
+        # 押されたチェック
+      if @map[@mx/32+ix, @my/32+iy] == 1   # 移動先が平地のときのみ
         # 8フレームで1マス移動
         8.times do
           @mx += ix * 4
           @my += iy * 4
-          self.x +=ix * 4
-          wait # waitすると次のフレームへ        
+          self.x += ix * 4
+         wait # waitすると次のフレームへ    
+        end
+      end
+      elsif @map[@mx/32+ix, @my/32] == 1   # 移動先が平地のときのみ
+        # 8フレームで1マス移動
+        8.times do
+          @mx += ix * 4
+          self.x += ix * 4
+          wait # waitすると次のフレームへ    
         end
       else
         wait

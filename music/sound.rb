@@ -17,11 +17,9 @@ Window.loop do
         sound_ending.play
     end
 
-    if Input.keyPush?(K_SPACE)#space押下でジャンプ効果音
+    if Input.keyPush?(K_UP)#space押下でジャンプ効果音
         sound_jump.play
     end
-
-    
 
     Window.draw(0,0,$rt)
 end

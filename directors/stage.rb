@@ -10,13 +10,11 @@ module Directors
 		end
 
 		def render_frame
-#			@map.draw(Window)
 			update_mouse_event
             scroll_dir = @dragging ? calc_scroll_dir : nil
             clicked_pos = @clicked ? get_mouse_pos : nil
             @map.update(scroll_dir, clicked_pos, Window)
 			@map.draw(0, 0)
-#			check_scene_transition
 			@prev_mouse_pos = get_mouse_pos
 		end
 
@@ -45,10 +43,9 @@ module Directors
 		end
 
 		def check_scene_transition
-				@next_stage_director.set_score_history(@stage_name, @map.score)
-				@next_stage_director.timer_start
-				transition_scene(@next_stage_director)
-			#end
+			@next_stage_director.set_score_history(@stage_name, @map.score)
+			@next_stage_director.timer_start
+			transition_scene(@next_stage_director)
 		end
 	end
 end

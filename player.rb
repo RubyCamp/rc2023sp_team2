@@ -25,6 +25,8 @@ class Player < Sprite
       @image = Image.load("./images/toy_hopping_boy2.png")
       @image1 = @image.flush([255, 200, 50, 30])
       self.collision = [0, 97, 64, 97] # 要調整
+
+      # @ending_director = Ending.new
     end
   
     # Player#updateすると呼ばれるFiberの中身
@@ -70,6 +72,8 @@ class Player < Sprite
           self.vanish #三回当たったら消える 
           sleep(0.65) 
           #シーン切り替えたい
+          $scene = GameOver
+          $scene.exec()
       end
     end
 

@@ -12,15 +12,16 @@ Window.loop do
         
     if Input.keyPush?(K_Z)#ｚ押下でＢＧＭ流れる
         sound.play
+    elsif Input.keyPush?(K_RETURN)#エンター押下でエンディング
+       sound.stop
+        sound_ending.play
     end
 
     if Input.keyPush?(K_SPACE)#space押下でジャンプ効果音
         sound_jump.play
     end
 
-    if Input.keyPush?(K_RETURN)#エンター押下でエンディング
-        sound_ending.play
-    end
+    
 
     Window.draw(0,0,$rt)
 end

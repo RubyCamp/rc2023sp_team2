@@ -11,7 +11,7 @@ class Bomb < Sprite
   # 更新
   def update
     # 移動
-    self.y += 2
+    self.y += 3
   end
 
   def hit(obj)

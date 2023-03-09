@@ -17,9 +17,6 @@ Window.caption = "RubyCamp 2023SP Group2 Game"
 # ゲーム開始時点で実行する最初のシーンディレクターを生成
 current_director = Directors::Title.new
 
-@sound = Sound.new("./music_jitensyaninote.mid")
-@sound.play
-
 Window.loop do
 	current_director = current_director.play
 	

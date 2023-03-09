@@ -1,5 +1,7 @@
 require_relative 'fiber_sprite'
 
+
+
 # 自キャラ
 class Player < Sprite
     include FiberSprite
@@ -26,6 +28,9 @@ class Player < Sprite
       @image1 = @image.flush([255, 200, 50, 30])
       self.collision = [25, 55, 65, 97] # 要調整
 
+
+      @sound = Sound.new("./music_jitensyaninote.mid")
+      @sound.play
       @sound2 = Sound.new("./music_jump.wav")
     end
   
@@ -70,6 +75,7 @@ class Player < Sprite
       if @hp >= 2
           self.vanish #三回当たったら消える 
           sleep(0.5) 
+          @sound.stop
           #シーン切り替えたい
           $scene = GameOver
           $scene.exec()

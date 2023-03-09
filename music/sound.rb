@@ -10,15 +10,15 @@ $rt = RenderTarget.new(448,480)
 
 Window.loop do
         
-    if Input.keyPush?(K_Z)
+    if Input.keyPush?(K_Z)#ｚ押下でＢＧＭ流れる
         sound.play
     end
 
-    if Input.keyPush?(K_SPACE)
+    if Input.keyPush?(K_SPACE)#space押下でジャンプ効果音
         sound_jump.play
     end
 
-    if Input.keyPush?(K_RETURN)
+    if Input.keyPush?(K_RETURN)#エンター押下でエンディング
         sound_ending.play
     end
 

@@ -1,7 +1,6 @@
 module GameOver
 	module_function
     def exec
-		puts("finish")
         result_img = Image.load("images/game_over.png")
 
 		@sound4 = Sound.new("./music_gameclear.mid")

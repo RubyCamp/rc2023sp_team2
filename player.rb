@@ -1,7 +1,5 @@
 require_relative 'fiber_sprite'
 
-
-
 # 自キャラ
 class Player < Sprite
     include FiberSprite
@@ -16,7 +14,8 @@ class Player < Sprite
       #@y = y 
       @jumping = false 
       @jump_count = 0
-      super(252, 583)
+      # super(252, 583)
+      super(192, 583)
   
       # 肩幅と足元のブロックにぶつかるため位置補正する細工
       self.center_x = 16
@@ -34,18 +33,42 @@ class Player < Sprite
       @sound2 = Sound.new("./music_jump.wav")
     end
   
+    #重力
+    G = 1
+
     # Player#updateすると呼ばれるFiberの中身
     def fiber_proc
       loop do
         ix, iy = Input.x, Input.y
-  
+
+        iy =0
+        iy += G
+
+        iy -= G if @map[self.x/32, self.y/32+1] == 1
+
         # 押されたチェック
-        if ix + iy != 0 and (ix == 0 or iy == 0) and # ナナメは却下
-           @map[self.x/32+ix, self.y/32+iy] == 0   # 移動先が平地のときのみ
+        # if ix + iy != 0 and (ix == 0 or iy == 0) and # ナナメは却下
+        #    @map[self.x/32+ix, self.y/32+iy] == 0   # 移動先が平地のときのみ
+        #   # 8フレームで1マス移動
+        #   8.times do
+        #     self.x +=ix * 4
+        #     wait # waitすると次のフレームへ        
+        #   end
+        # else
+        #   wait
+        # end
+        if @map[self.x/32+ix, self.y/32+iy] == 0   # 移動先が平地のときのみ
           # 8フレームで1マス移動
           8.times do
-            self.x +=ix * 4
-            wait # waitすると次のフレームへ        
+            self.x += ix * 4
+            self.y += iy * 4
+           wait # waitすると次のフレームへ    
+          end
+        elsif @map[self.x/32+ix, self.y/32] == 0   # 移動先が平地のときのみ
+          # 8フレームで1マス移動
+          8.times do
+            self.x += ix * 4
+            wait # waitすると次のフレームへ    
           end
         else
           wait
@@ -56,6 +79,7 @@ class Player < Sprite
           @jumping = true 
           @jump_count = 0
         end
+
         if @jumping 
           if @jump_count < 10 # up 
             self.y -= 10
@@ -64,6 +88,7 @@ class Player < Sprite
           else # jump over 
             @jumping = false 
           end
+
           @jump_count += 1
         end
       end

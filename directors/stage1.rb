@@ -33,7 +33,7 @@ module Directors
 			@player.vanished?
     		
 			if @count % 60 == 0
-				@bombs << Bomb.new(rand(300)+100, -50, Window)
+				@bombs << Bomb.new(rand(500)+10, -50, Window)
 			end
 			@count += 1
 		end
